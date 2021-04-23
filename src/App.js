@@ -1,6 +1,6 @@
 import React from "react";
-import MainPanel from "components/MainPanel";
-import SideBar  from "components/SideBar";
+import MainPanel from "layouts/MainPanel";
+import SideBar  from "layouts/SideBar";
 
 const App = () => {
   return (

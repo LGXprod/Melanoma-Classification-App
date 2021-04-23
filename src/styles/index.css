@@ -37,3 +37,35 @@ h1 {
   text-align: center;
   color: #f2f3f4;
 }
+
+.center-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown {
+  min-width: 150px;
+}
+
+.dropdown option {
+  color: black;
+}
+
+.MuiFilledInput-input {
+  padding: 10px !important;
+  border-radius: 5px 5px 0 0 !important;
+  background-color: #64669B !important;
+  color: white !important;
+}
+
+.MuiSelect-icon {
+  color: #f2f3f4 !important;
+}
