@@ -74,8 +74,8 @@ h1, label {
 
 .form {
   width: 50%;
-  height: 50%;
   border-radius: 10px;
+  padding: 10px;
 }
 
 .patient-form .MuiInputBase-input {
