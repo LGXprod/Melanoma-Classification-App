@@ -1,15 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
 .blue {
-  background-color: #64819B;
+  background-color: #64819b;
 }
 
 .green {
-  background-color: #649B99;
+  background-color: #649b99;
 }
 
 .purple {
-  background-color: #64669B;
+  background-color: #64669b;
+}
+
+.blur {
+  filter: blur(10px);
 }
 
 .main-panel {
@@ -19,6 +23,7 @@
   margin: 0;
   width: calc(80% - 40px);
   height: calc(100vh - 40px);
+  z-index: 1;
 }
 
 .side-bar {
@@ -27,15 +32,21 @@
   display: inline-block;
   width: 20%;
   height: calc(100vh - 20px);
+  z-index: 1;
 }
 
-h1 {
+h1, label {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   margin: 0;
   overflow: hidden;
   text-align: center;
   color: #f2f3f4;
+}
+
+.reg-button {
+  color: #f2f3f4 !important;
+  background-color: #64669b !important;
 }
 
 .center-column {
@@ -51,6 +62,31 @@ h1 {
   align-items: center;
 }
 
+.form-container {
+  position: absolute;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(10px);
+  top: 0;
+  left: 0;
+}
+
+.form {
+  width: 50%;
+  height: 50%;
+  border-radius: 10px;
+}
+
+.patient-form .MuiInputBase-input {
+  width: 275px;
+}
+
+.form > * {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .dropdown {
   min-width: 150px;
 }
@@ -62,10 +98,22 @@ h1 {
 .MuiFilledInput-input {
   padding: 10px !important;
   border-radius: 5px 5px 0 0 !important;
-  background-color: #64669B !important;
+  background-color: #64669b !important;
   color: white !important;
 }
 
+.MuiRadio-root {
+  color: #64819b !important;
+}
+
+.MuiRadio-colorPrimary.Mui-checked {
+  color: #64669b !important;
+}
+
 .MuiSelect-icon {
+  color: #f2f3f4 !important;
+}
+
+.MuiFormLabel-root {
   color: #f2f3f4 !important;
 }

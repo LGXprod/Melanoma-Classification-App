@@ -1,38 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
-import Select from '@material-ui/core/Select';
+import React from "react";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 
-const ImportDropDown = () => {
-  const [isSingleImport, setIsSingleImport] = useState();
-
-  const inputFile = useRef(null) ;
-
-  useEffect(() => {
-    console.log(isSingleImport);
-  }, [isSingleImport]);
-
+const ImportDropDown = ({ isSingleImport, setIsSingleImport }) => {
   return (
     <>
       <Select
         native
         variant="filled"
-        value={isSingleImport == null ? true : isSingleImport}
-        onChange={(e) => {
-          setIsSingleImport(e.target.value);
-          inputFile.current.click();
-        }}
-        inputProps={{
-          name: 'Import new',
-          id: 'age-native-simple',
-        }}
+        value={isSingleImport}
+        onChange={(e) => setIsSingleImport(e.target.value)}
         className="dropdown"
       >
+        <option value={null} style={{ display: "none" }}>Import Imaging</option>
         <option value={true}>Single Patient</option>
         <option value={false}>Batch Import</option>
       </Select>
-
-      <input type='file' id='file' ref={inputFile} style={{display: 'none'}}/>
     </>
   );
-}
+};
 
 export default ImportDropDown;
