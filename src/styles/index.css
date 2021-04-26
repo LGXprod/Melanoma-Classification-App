@@ -27,11 +27,10 @@
 }
 
 .side-bar {
-  padding-top: 20px;
   vertical-align: top;
   display: inline-block;
   width: 20%;
-  height: calc(100vh - 20px);
+  height: calc(100vh);
   z-index: 1;
 }
 

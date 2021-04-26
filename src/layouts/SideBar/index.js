@@ -23,8 +23,11 @@ const SideBar = () => {
 
   return (
     <div className="green side-bar">
-      <div style={{ width: "100%", height: "100%", overflowY: "scroll" }} className="center-column">
-        <div style={{ marginBottom: "20px" }}>
+      <div
+        style={{ width: "100%", height: "100%", justifyContent: "flex-start", overflowY: "scroll" }}
+        className="center-column"
+      >
+        <div style={{ marginTop: "20px", marginBottom: "20px" }}>
           <h1>Imported Melanoma Imaging Sets</h1>
         </div>
 
