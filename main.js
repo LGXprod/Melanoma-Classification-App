@@ -87,10 +87,12 @@ ipcMain.on("patientData:submit", (event, patientData) => {
 
   // need to make classification at this point and append it to the object
   patientData.isMalignant = Math.random() < 0.5; // placeholder gives random boolean
+  // probability that the model gives for the classification being correct
+  patientData.probability = (Math.random()*100).toFixed(2); 
 
   var currentAppData = fs.readFileSync("appData.json");
   var json = JSON.parse(currentAppData);
-  json.push(patientData);
+  json.push({ ...patientData, id: json.length });
 
   fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));
 

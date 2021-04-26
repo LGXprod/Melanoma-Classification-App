@@ -16,6 +16,10 @@
   filter: blur(10px);
 }
 
+.full-width {
+  width: 100%;
+}
+
 .main-panel {
   padding: 20px;
   vertical-align: top;
@@ -29,12 +33,13 @@
 .side-bar {
   vertical-align: top;
   display: inline-block;
-  width: 20%;
-  height: calc(100vh);
+  width: calc(20% - 2px);
+  height: 100vh;
   z-index: 1;
+  border-right: 2px solid #64669b;
 }
 
-.side-bar div > div {
+.side-bar div > div, .patient-tab > * {
   margin-bottom: 20px;
 }
 
@@ -119,4 +124,8 @@ h1, h2, h3, label {
 
 .MuiFormLabel-root {
   color: #f2f3f4 !important;
+}
+
+.patient-data > * {
+  margin-bottom: 5px;
 }

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ImportDropDown from "components/ImportDropDown";
 import SinglePatient from "./forms/SinglePatient";
+import PatientClassification from "./PatientClassification";
 
-const MainPanel = () => {
+const MainPanel = ({ selectedTabData }) => {
   const [isSingleImport, setIsSingleImport] = useState();
   const [showPatientForm, setShowPatientForm] = useState();
 
@@ -18,19 +19,27 @@ const MainPanel = () => {
           style={{ width: "100%", height: "100%" }}
           className="center-column"
         >
-          <h1 style={{ marginBottom: "20px", fontSize: "40px" }}>
-            To begin detecting malignant Melanomas import a single patient’s
-            information or a batch of patient information.
-          </h1>
+          {selectedTabData != null ? (
+            <PatientClassification classification={selectedTabData} />
+          ) : (
+            <>
+              <h1 style={{ marginBottom: "20px", fontSize: "40px" }}>
+                To begin detecting malignant Melanomas import a single patient’s
+                information or a batch of patient information.
+              </h1>
 
-          <ImportDropDown
-            isSingleImport={isSingleImport}
-            setIsSingleImport={setIsSingleImport}
-          />
+              <ImportDropDown
+                isSingleImport={isSingleImport}
+                setIsSingleImport={setIsSingleImport}
+              />
+            </>
+          )}
         </div>
       </div>
 
-      {isSingleImport ? <SinglePatient setIsSingleImport={setIsSingleImport} /> : null}
+      {isSingleImport ? (
+        <SinglePatient setIsSingleImport={setIsSingleImport} />
+      ) : null}
     </>
   );
 };

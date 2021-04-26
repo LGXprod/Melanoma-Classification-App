@@ -1,30 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-const { ipcRenderer } = window.require("electron");
-
-const SideBar = () => {
-  const [classifications, setClassifications] = useState([]);
-
-  useEffect(() => {
-    ipcRenderer.send("classifications:initialLoad");
-
-    ipcRenderer.on("classifications:initialLoad", (event, classifications) => {
-      console.log(classifications);
-      setClassifications(classifications);
-    });
-  }, []);
-
-  useEffect(() => {
-    ipcRenderer.on("patientClassification:added", (event, classification) => {
-      console.log("num", classifications.length);
-      setClassifications([...classifications, classification]);
-    });
-  }, [classifications]);
-
+const SideBar = ({ classifications, setSelectedTabData }) => {
   return (
     <div className="green side-bar">
+      {/* overflowY makes scrollbar visible if there are too many items in sidebar causing overflow */}
       <div
-        style={{ width: "100%", height: "100%", justifyContent: "flex-start", overflowY: "scroll" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          justifyContent: "flex-start",
+          overflowY: "auto",
+        }}
         className="center-column"
       >
         <div style={{ marginTop: "20px", marginBottom: "20px" }}>
@@ -35,7 +21,7 @@ const SideBar = () => {
           ? classifications.map((classification, index) => {
               return (
                 <div key={index}>
-                  <h2>{classification.patientName}</h2>
+                  <h2 onClick={() => setSelectedTabData(classifications[index])}>{classification.patientName}</h2>
                 </div>
               );
             })
