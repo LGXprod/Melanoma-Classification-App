@@ -21,7 +21,12 @@ const SideBar = ({ classifications, setSelectedTabData }) => {
           ? classifications.map((classification, index) => {
               return (
                 <div key={index}>
-                  <h2 onClick={() => setSelectedTabData(classifications[index])}>{classification.patientName}</h2>
+                  <h2
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setSelectedTabData(classifications[index])}
+                  >
+                    {classification.patientName}
+                  </h2>
                 </div>
               );
             })
