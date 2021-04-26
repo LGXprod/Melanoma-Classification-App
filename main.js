@@ -32,6 +32,7 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
     },
+    icon: `${__dirname}/src/images/app-icon.ico`
   });
 
   // and load the index.html of the app.
