@@ -35,7 +35,11 @@
   z-index: 1;
 }
 
-h1, label {
+.side-bar div > div {
+  margin-bottom: 20px;
+}
+
+h1, h2, h3, label {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   margin: 0;

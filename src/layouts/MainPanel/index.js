@@ -30,7 +30,7 @@ const MainPanel = () => {
         </div>
       </div>
 
-      {isSingleImport ? <SinglePatient /> : null}
+      {isSingleImport ? <SinglePatient setIsSingleImport={setIsSingleImport} /> : null}
     </>
   );
 };

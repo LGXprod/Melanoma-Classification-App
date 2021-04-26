@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import Button from "@material-ui/core/Button";
 
-const FileDialog = ({ label, isSingleFile }) => {
-  const [files, setFiles] = useState();
+const FileDialog = ({ label, isSingleFile, setFiles }) => {
+  
   const inputFile = useRef(null);
 
   const handleFileUpload = (e) => {

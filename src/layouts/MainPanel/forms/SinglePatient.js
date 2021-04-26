@@ -11,18 +11,72 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 
-const SinglePatient = () => {
+const { ipcRenderer } = window.require('electron');
+
+const SinglePatient = ({ setIsSingleImport }) => {
+  const [file, setFile] = useState();
+
+  const [patientDetails, setPatientDetails] = useState({
+    patientName: null,
+    age: null,
+    sex: null,
+    imageLocation: null,
+  });
+
+  const updateDetails = (attribute, value) => {
+    setPatientDetails({ ...patientDetails, [attribute]: value });
+  };
+
+  const onSubmit = () => {
+    console.log(patientDetails);
+    let formCompleted = true;
+
+    if (file == null) {
+      formCompleted = false;
+    }
+
+    for (let attribute in patientDetails) {
+      if (patientDetails[attribute] == null) {
+        formCompleted = false;
+        break;
+      }
+    }
+
+    if (formCompleted) {
+      console.log("f", file.path)
+      ipcRenderer.send("patientData:submit", { ...patientDetails, filePath: file.path });
+      setIsSingleImport(false);
+    }
+  };
+
   return (
     <div className="form-container center-row">
       <div className="green form center-column patient-form">
-        <h1>Single Patient Detection</h1>
+        <div style={{ width: "100%" }}>
+          <img
+            alt="close icon"
+            src={CloseIcon}
+            style={{ width: "32px", float: "right", marginRight: "10px" }}
+            onClick={() => setIsSingleImport(false)}
+          />
+        </div>
+
+        <h1 style={{ marginTop: "-30px" }}>Single Patient Detection</h1>
 
         <div>
-          <TextField id="standard-basic" label="Patient" />
+          <TextField
+            id="standard-basic"
+            label="Patient name"
+            onChange={(e) => updateDetails("patientName", e.target.value)}
+          />
         </div>
 
         <div>
-          <TextField id="standard-basic" label="Age" />
+          <TextField
+            id="standard-basic"
+            label="Age"
+            onChange={(e) => updateDetails("age", e.target.value)}
+          />
         </div>
 
         <div style={{ marginTop: "26px", width: "275px" }}>
@@ -33,15 +87,16 @@ const SinglePatient = () => {
               aria-label="position"
               name="position"
               defaultValue="top"
+              onChange={(e) => updateDetails("sex", e.target.value)}
             >
               <FormControlLabel
-                value="Male"
+                value="male"
                 control={<Radio color="primary" />}
                 label="Male"
                 labelPlacement="end"
               />
               <FormControlLabel
-                value="Female"
+                value="female"
                 control={<Radio color="primary" />}
                 label="Female"
                 labelPlacement="end"
@@ -54,19 +109,25 @@ const SinglePatient = () => {
           <TextField
             id="standard-basic"
             label="Location of image sited on patient"
+            onChange={(e) => updateDetails("imageLocation", e.target.value)}
           />
         </div>
 
         <div>
-          <FileDialog isSingleFile={true} label="Import Lession Image" />
+          <FileDialog
+            isSingleFile={true}
+            label="Import Lession Image"
+            files={file}
+            setFiles={setFile}
+          />
         </div>
 
         <div>
-          <Button className="reg-button">Submit</Button>
+          <Button className="reg-button" onClick={onSubmit}>
+            Submit
+          </Button>
         </div>
       </div>
-
-      <img alt="close icon" src={CloseIcon} style={{ width: "48px" }} />
     </div>
   );
 };
