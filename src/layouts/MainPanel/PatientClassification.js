@@ -11,7 +11,7 @@ const PatientClassification = ({ classification }) => {
     imageLocation,
     isMalignant,
     probability,
-    image,
+    fileName,
   } = classification;
 
   function roundToTwo(num) {
@@ -33,7 +33,7 @@ const PatientClassification = ({ classification }) => {
       </div>
 
       <div style={{ width: "85%" }}>
-        <img alt="Melanoma" src={`data:image/jpeg;base64, ${image}`} />
+        <img alt="Melanoma" src={require(`melanoma_images/${fileName}`).default} />
       </div>
     </div>
   );

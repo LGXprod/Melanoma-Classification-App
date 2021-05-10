@@ -24,3 +24,7 @@ yarn-error.log*
 
 # environment variables
 *.env
+
+# models
+model_e2.hdf5
+model_e3.hdf5

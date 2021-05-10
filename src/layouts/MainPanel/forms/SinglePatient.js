@@ -11,7 +11,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer } = window.require("electron");
 
 const SinglePatient = ({ setIsSingleImport }) => {
   const [file, setFile] = useState();
@@ -43,8 +43,12 @@ const SinglePatient = ({ setIsSingleImport }) => {
     }
 
     if (formCompleted) {
-      console.log("f", file.path)
-      ipcRenderer.send("patientData:submit", { ...patientDetails, filePath: file.path });
+      console.log("f", file);
+      ipcRenderer.send("patientData:submit", {
+        ...patientDetails,
+        filePath: file.path,
+        fileName: file.name,
+      });
       setIsSingleImport(false);
     }
   };

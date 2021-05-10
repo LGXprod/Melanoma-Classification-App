@@ -9,6 +9,8 @@ const { app, BrowserWindow, ipcMain } = electron;
 const path = require("path");
 const url = require("url");
 
+const Jimp = require("jimp");
+
 const startUrl =
   process.env.ELECTRON_START_URL ||
   url.format({
@@ -32,7 +34,7 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
     },
-    icon: `${__dirname}/src/images/app-icon.ico`
+    icon: `${__dirname}/src/images/app-icon.ico`,
   });
 
   // and load the index.html of the app.
@@ -80,24 +82,44 @@ ipcMain.on("classifications:initialLoad", (event) => {
 });
 
 ipcMain.on("patientData:submit", (event, patientData) => {
-  patientData = {
-    ...patientData,
-    image: fs.readFileSync(patientData.filePath, "base64"),
-  };
-  //   console.log(patientData);
+  let currentAppData = fs.readFileSync("appData.json");
+  let json = JSON.parse(currentAppData);
 
-  // need to make classification at this point and append it to the object
-  patientData.isMalignant = Math.random() < 0.5; // placeholder gives random boolean
-  // probability that the model gives for the classification being correct
-  patientData.probability = (Math.random()*100).toFixed(2); 
+  const imageFormat = patientData.fileName.split(".")[
+    patientData.fileName.split(".").length - 1
+  ];
 
-  var currentAppData = fs.readFileSync("appData.json");
-  var json = JSON.parse(currentAppData);
-  json.push({ ...patientData, id: json.length });
+  fs.copyFile(
+    patientData.filePath,
+    `${__dirname}/src/melanoma_images/${json.length}.${imageFormat}`,
+    (err) => {
+      if (err) throw err;
 
-  fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));
+      // need to make classification at this point and append it to the object
+      patientData.isMalignant = Math.random() < 0.5; // placeholder gives random boolean
+      // probability that the model gives for the classification being correct
+      patientData.probability = (Math.random() * 100).toFixed(2);
 
-  mainWindow.webContents.send("patientClassification:added", patientData);
+      Jimp.read(
+        `${__dirname}/src/melanoma_images/${json.length}.${imageFormat}`,
+        (err, image) => {
+          if (err) throw err;
+
+          console.log(image);
+        }
+      );
+
+      json.push({
+        ...patientData,
+        id: json.length,
+        fileName: `${json.length}.${imageFormat}`,
+      });
+
+      fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));
+
+      mainWindow.webContents.send("patientClassification:added", json);
+    }
+  );
 });
 
 // ipcMain.on("batchPatientData:submit", (event, patientsData) => {
