@@ -43,13 +43,18 @@
   margin-bottom: 20px;
 }
 
-h1, h2, h3, label {
+h1, h2, h3, label, p, ul {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   margin: 0;
   overflow: hidden;
   text-align: center;
   color: #f2f3f4;
+}
+
+p, ul {
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 .reg-button {

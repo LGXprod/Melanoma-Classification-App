@@ -7,6 +7,7 @@ const { ipcRenderer } = window.require("electron");
 const App = () => {
   const [classifications, setClassifications] = useState([]);
   const [selectedTabData, setSelectedTabData] = useState();
+  const [showAboutPage, setShowAboutPage] = useState(false);
 
   useEffect(() => {
     ipcRenderer.send("classifications:initialLoad");
@@ -25,17 +26,21 @@ const App = () => {
   }, [classifications]);
 
   useEffect(() => {
-    console.log("t", selectedTabData)
-  }, [selectedTabData])
+    console.log("t", selectedTabData);
+  }, [selectedTabData]);
 
   return (
     <>
       <SideBar
         classifications={classifications}
         setSelectedTabData={setSelectedTabData}
+        setShowAboutPage={setShowAboutPage}
       />
 
-      <MainPanel selectedTabData={selectedTabData} />
+      <MainPanel
+        selectedTabData={selectedTabData}
+        showAboutPage={showAboutPage}
+      />
     </>
   );
 };

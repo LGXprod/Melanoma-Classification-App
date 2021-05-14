@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-
-const { ipcRenderer } = window.require("electron");
+import React from "react";
 
 const PatientClassification = ({ classification }) => {
   console.log(classification);
@@ -14,10 +12,6 @@ const PatientClassification = ({ classification }) => {
     fileName,
   } = classification;
 
-  function roundToTwo(num) {
-    return +(Math.round(num + "e+2") + "e-2");
-  }
-
   return (
     <div className="full-width center-column patient-tab">
       <h1>Patient name: {patientName}</h1>
@@ -30,10 +24,12 @@ const PatientClassification = ({ classification }) => {
           Classification: {isMalignant ? "Malignant" : "Benign"} (Probability ={" "}
           {probability}%)
         </h3>
-      </div>
 
-      <div style={{ width: "85%" }}>
-        <img alt="Melanoma" src={require(`melanoma_images/${fileName}`).default} />
+        <img
+          style={{ marginTop: "25px" }}
+          alt="Melanoma"
+          src={require(`melanoma_images/${fileName}`).default}
+        />
       </div>
     </div>
   );

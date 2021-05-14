@@ -1,35 +1,64 @@
 [
   {
-    "patientName": "Patient 1",
-    "age": "12",
+    "patientName": "Danial Grainger",
+    "age": "37",
     "sex": "male",
-    "imageLocation": "ferg",
+    "imageLocation": "Hand",
     "filePath": "/home/matthew/Documents/Uni/DLCNN/image.jpeg",
     "fileName": "0.jpeg",
-    "isMalignant": true,
-    "probability": "75.27",
+    "isMalignant": false,
+    "probability": "1.75",
     "id": 0
+  }, 
+  {
+    "patientName": "Asmaa Barnard"
   },
   {
-    "patientName": "uikhjm",
-    "age": "23",
-    "sex": "male",
-    "imageLocation": "fe",
-    "filePath": "/home/matthew/Documents/Uni/DLCNN/image.jpeg",
-    "fileName": "1.jpeg",
-    "isMalignant": false,
-    "probability": "22.40",
-    "id": 1
+    "patientName": "Aria Cartwright"
   },
   {
-    "patientName": "Patient 2",
-    "age": "34",
-    "sex": "male",
-    "imageLocation": "vewrbgr",
-    "filePath": "/home/matthew/Documents/Uni/DLCNN/image.jpeg",
-    "fileName": "2.jpeg",
-    "isMalignant": false,
-    "probability": "94.00",
-    "id": 2
+    "patientName": "Ho Mansell"
+  },
+  {
+    "patientName": "Ravinder Wong"
+  },
+  {
+    "patientName": "Carrie Boyle"
+  },
+  {
+    "patientName": "Orson Bernal"
+  },
+  {
+    "patientName": "Asmaa Barnard"
+  },
+  {
+    "patientName": "Asmaa Barnard"
+  },
+  {
+    "patientName": "Mia-Rose Hook"
+  },
+  {
+    "patientName": "Zahrah Connelly"
+  },
+  {
+    "patientName": "Phyllis Farrow"
+  },
+  {
+    "patientName": "Louis Adams"
+  },
+  {
+    "patientName": "Cherise Curran"
+  },
+  {
+    "patientName": "Ehsan Hussain"
+  },
+  {
+    "patientName": "Olivia-Rose English"
+  },
+  {
+    "patientName": "Finnlay Osborne"
+  },
+  {
+    "patientName": "Fionn Pemberton"
   }
 ]
