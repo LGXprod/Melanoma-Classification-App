@@ -1,64 +1,13 @@
 [
   {
-    "patientName": "Danial Grainger",
-    "age": "37",
+    "patientName": "Matthew Ghannoum",
+    "age": "20",
     "sex": "male",
     "imageLocation": "Hand",
     "filePath": "/home/matthew/Documents/Uni/DLCNN/image.jpeg",
     "fileName": "0.jpeg",
     "isMalignant": false,
-    "probability": "1.75",
+    "probability": "40.87",
     "id": 0
-  }, 
-  {
-    "patientName": "Asmaa Barnard"
-  },
-  {
-    "patientName": "Aria Cartwright"
-  },
-  {
-    "patientName": "Ho Mansell"
-  },
-  {
-    "patientName": "Ravinder Wong"
-  },
-  {
-    "patientName": "Carrie Boyle"
-  },
-  {
-    "patientName": "Orson Bernal"
-  },
-  {
-    "patientName": "Asmaa Barnard"
-  },
-  {
-    "patientName": "Asmaa Barnard"
-  },
-  {
-    "patientName": "Mia-Rose Hook"
-  },
-  {
-    "patientName": "Zahrah Connelly"
-  },
-  {
-    "patientName": "Phyllis Farrow"
-  },
-  {
-    "patientName": "Louis Adams"
-  },
-  {
-    "patientName": "Cherise Curran"
-  },
-  {
-    "patientName": "Ehsan Hussain"
-  },
-  {
-    "patientName": "Olivia-Rose English"
-  },
-  {
-    "patientName": "Finnlay Osborne"
-  },
-  {
-    "patientName": "Fionn Pemberton"
   }
 ]

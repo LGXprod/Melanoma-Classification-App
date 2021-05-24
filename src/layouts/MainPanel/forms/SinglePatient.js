@@ -23,6 +23,8 @@ const SinglePatient = ({ setIsSingleImport }) => {
     imageLocation: null,
   });
 
+  const [isIncomplete, setIsInComplete] = useState(false);
+
   const updateDetails = (attribute, value) => {
     setPatientDetails({ ...patientDetails, [attribute]: value });
   };
@@ -33,11 +35,13 @@ const SinglePatient = ({ setIsSingleImport }) => {
 
     if (file == null) {
       formCompleted = false;
+      setIsInComplete(true);
     }
 
     for (let attribute in patientDetails) {
       if (patientDetails[attribute] == null) {
         formCompleted = false;
+        setIsInComplete(true);
         break;
       }
     }
@@ -125,6 +129,13 @@ const SinglePatient = ({ setIsSingleImport }) => {
             setFiles={setFile}
           />
         </div>
+
+        {isIncomplete ? (
+          <label>
+            Form is incomplete. Please ensure you have correctly filled out each
+            field.
+          </label>
+        ) : null}
 
         <div>
           <Button className="reg-button" onClick={onSubmit}>

@@ -89,6 +89,7 @@ p, ul {
   width: 50%;
   border-radius: 10px;
   padding: 10px;
+  border: 2px solid #64669b;
 }
 
 .patient-form .MuiInputBase-input {
