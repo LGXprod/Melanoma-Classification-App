@@ -3,6 +3,8 @@ const electron = require("electron");
 const fs = require("fs");
 const process = require("process");
 
+const csv = require("csv-parser");
+
 // Module to control application life.
 // Module to create native browser window.
 const { app, BrowserWindow, ipcMain } = electron;
@@ -30,7 +32,7 @@ function base64_encode(file) {
   // read binary data
   var bitmap = fs.readFileSync(file);
   // convert binary data to base64 encoded string
-  return new Buffer(bitmap).toString('base64');
+  return new Buffer(bitmap).toString("base64");
 }
 
 (async () => {
@@ -128,10 +130,11 @@ function base64_encode(file) {
               );
 
             json.push({
+              isBatch: false,
               ...patientData,
               id: json.length,
               fileName: `${json.length}.${imageFormat}`,
-              image: base64_encode(patientData.filePath)
+              image: base64_encode(patientData.filePath),
             });
 
             fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));
@@ -186,7 +189,40 @@ function base64_encode(file) {
     );
   });
 
-  ipcMain.on("batchPatientData:submit", (event, batchPatientData) => {
-    console.log(batchPatientData);
+  ipcMain.on("batchPatientData:submit", (event, batchMetaData) => {
+    const { batchName, csvFile, images } = batchMetaData;
+
+    const batchPatientData = [];
+
+    fs.createReadStream(csvFile.path)
+      .pipe(csv())
+      .on("data", (row) =>
+        batchPatientData.push({
+          ...row,
+          image: base64_encode(images[row.imageName]),
+        })
+      )
+      .on("end", () => {
+        let jsonFile = fs.readFileSync("appData.json");
+        let currentPatientData = JSON.parse(jsonFile);
+
+        currentPatientData.push({
+          isBatch: true,
+          name: batchName,
+          ...currentPatientData,
+          id: currentPatientData.length,
+          batchPatientData
+        });
+
+        fs.writeFileSync(
+          "appData.json",
+          JSON.stringify(currentPatientData, null, 2)
+        );
+
+        mainWindow.webContents.send(
+          "patientClassification:added",
+          currentPatientData
+        );
+      });
   });
 })();

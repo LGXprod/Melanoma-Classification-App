@@ -17,7 +17,7 @@ const SinglePatient = ({ setSelectedTab }) => {
   const [file, setFile] = useState();
 
   const [patientDetails, setPatientDetails] = useState({
-    patientName: null,
+    name: null,
     age: null,
     sex: null,
     imageLocation: null,
@@ -75,7 +75,7 @@ const SinglePatient = ({ setSelectedTab }) => {
           <TextField
             id="standard-basic"
             label="Patient name"
-            onChange={(e) => updateDetails("patientName", e.target.value)}
+            onChange={(e) => updateDetails("name", e.target.value)}
           />
         </div>
 

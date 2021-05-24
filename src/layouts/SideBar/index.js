@@ -19,10 +19,12 @@ const SideBar = ({ classifications, setSelectedTab }) => {
 
         <h2
           style={{ cursor: "pointer" }}
-          onClick={() => setSelectedTab({
-            type: "About Page",
-            data: null
-          })}
+          onClick={() =>
+            setSelectedTab({
+              type: "About Page",
+              data: null,
+            })
+          }
         >
           About
           <br />
@@ -51,12 +53,14 @@ const SideBar = ({ classifications, setSelectedTab }) => {
                     style={{ cursor: "pointer" }}
                     onClick={() =>
                       setSelectedTab({
-                        type: "Single Classification",
+                        type: classifications[index].isBatch
+                          ? "Batch Classification"
+                          : "Single Classification",
                         data: classifications[index],
                       })
                     }
                   >
-                    {classification.patientName}
+                    {classification.name}
                   </h3>
                 </div>
               );

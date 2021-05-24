@@ -24,10 +24,10 @@ const BatchImport = ({ setSelectedTab }) => {
   };
 
   const submitForm = () => {
-    let imageData = [];
+    let imageData = {};
 
     for (let image of images) {
-      imageData.push({ name: image.name, path: image.path });
+      imageData[image.name] = image.path;
     }
 
     const batchPatientData = {
