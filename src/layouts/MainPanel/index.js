@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
+
 import ImportDropDown from "components/ImportDropDown";
 import SinglePatient from "./forms/SinglePatient";
-import PatientClassification from "./PatientClassification";
 import AboutPage from "./AboutPage";
 
-const MainPanel = ({ selectedTabData, showAboutPage }) => {
-  const [isSingleImport, setIsSingleImport] = useState();
-  const [showPatientForm, setShowPatientForm] = useState();
+import PatientClassification from "./PatientClassification";
+import BatchClassification from "./BatchClassification";
 
+const MainPanel = ({ selectedTab, setSelectedTab }) => {
   useEffect(() => {
-    console.log("import", isSingleImport);
-  }, [isSingleImport]);
+    console.log("import", selectedTab);
+  }, [selectedTab]);
 
   // ${isSingleImport ? "blur" : ""}
   return (
@@ -21,50 +21,35 @@ const MainPanel = ({ selectedTabData, showAboutPage }) => {
           className="center-column"
         >
           {(() => {
-            if (selectedTabData != null) {
-              return <PatientClassification classification={selectedTabData} />;
-            } else if (showAboutPage) {
-              return  <AboutPage />;
-            } else {
-              return (
-                <>
-                  <h1 style={{ marginBottom: "20px", fontSize: "40px" }}>
-                    To begin detecting malignant Melanomas import a single
-                    patient’s information or a batch of patient information.
-                  </h1>
+            switch (selectedTab.type) {
+              case "Single Classification":
+                return (
+                  <PatientClassification classification={selectedTab.data} />
+                );
+              case "About Page":
+                return  <AboutPage />;
+              case "BatchClassification":
+                  return <BatchClassification />;
+              case "Single Patient Form":
+                  return <SinglePatient setSelectedTab={setSelectedTab} />;
+              default:
+                return (
+                  <Fragment>
+                    <h1 style={{ marginBottom: "20px", fontSize: "40px" }}>
+                      To begin detecting malignant Melanomas import a single
+                      patient’s information or a batch of patient information.
+                    </h1>
 
-                  <ImportDropDown
-                    isSingleImport={isSingleImport}
-                    setIsSingleImport={setIsSingleImport}
-                  />
-                </>
-              );
+                    <ImportDropDown
+                      selectedTab={selectedTab}
+                      setSelectedTab={setSelectedTab}
+                    />
+                  </Fragment>
+                );
             }
           })()}
-
-          {/* {!showAboutPage ? (
-            selectedTabData != null ? (
-              <PatientClassification classification={selectedTabData} />
-            ) : (
-              <>
-                <h1 style={{ marginBottom: "20px", fontSize: "40px" }}>
-                  To begin detecting malignant Melanomas import a single
-                  patient’s information or a batch of patient information.
-                </h1>
-
-                <ImportDropDown
-                  isSingleImport={isSingleImport}
-                  setIsSingleImport={setIsSingleImport}
-                />
-              </>
-            )
-          ) : <AboutPage />} */}
         </div>
       </div>
-
-      {isSingleImport ? (
-        <SinglePatient setIsSingleImport={setIsSingleImport} />
-      ) : null}
     </>
   );
 };

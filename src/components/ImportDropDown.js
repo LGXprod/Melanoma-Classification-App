@@ -3,19 +3,22 @@ import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 
-const ImportDropDown = ({ isSingleImport, setIsSingleImport }) => {
+const ImportDropDown = ({ selectedTab, setSelectedTab }) => {
   return (
     <>
       <Select
         native
         variant="filled"
-        value={isSingleImport}
-        onChange={(e) => setIsSingleImport(e.target.value)}
+        value={selectedTab.type}
+        onChange={(e) => setSelectedTab({
+          type: e.target.value,
+          data: null
+        })}
         className="dropdown"
       >
         <option value={null} style={{ display: "none" }}>Import Imaging</option>
-        <option value={true}>Single Patient</option>
-        <option value={false}>Batch Import</option>
+        <option value={"Single Patient Form"}>Single Patient</option>
+        <option value={"Batch Patient Form"}>Batch Import</option>
       </Select>
     </>
   );

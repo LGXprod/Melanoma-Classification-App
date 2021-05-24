@@ -13,7 +13,7 @@ import Button from "@material-ui/core/Button";
 
 const { ipcRenderer } = window.require("electron");
 
-const SinglePatient = ({ setIsSingleImport }) => {
+const SinglePatient = ({ setSelectedTab }) => {
   const [file, setFile] = useState();
 
   const [patientDetails, setPatientDetails] = useState({
@@ -53,7 +53,7 @@ const SinglePatient = ({ setIsSingleImport }) => {
         filePath: file.path,
         fileName: file.name,
       });
-      setIsSingleImport(false);
+      setSelectedTab({ type: null, data: null });
     }
   };
 
@@ -65,7 +65,7 @@ const SinglePatient = ({ setIsSingleImport }) => {
             alt="close icon"
             src={CloseIcon}
             style={{ width: "32px", float: "right", marginRight: "10px" }}
-            onClick={() => setIsSingleImport(false)}
+            onClick={() => setSelectedTab({ type: null, data: null })}
           />
         </div>
 

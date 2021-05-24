@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const SideBar = ({ classifications, setSelectedTabData, setShowAboutPage }) => {
+const SideBar = ({ classifications, setSelectedTab }) => {
   return (
     <div className="green side-bar">
       {/* overflowY makes scrollbar visible if there are too many items in sidebar causing overflow */}
@@ -19,7 +19,10 @@ const SideBar = ({ classifications, setSelectedTabData, setShowAboutPage }) => {
 
         <h2
           style={{ cursor: "pointer" }}
-          onClick={() => setShowAboutPage(true)}
+          onClick={() => setSelectedTab({
+            type: "About Page",
+            data: null
+          })}
         >
           About
           <br />
@@ -46,7 +49,12 @@ const SideBar = ({ classifications, setSelectedTabData, setShowAboutPage }) => {
                 <div key={index}>
                   <h3
                     style={{ cursor: "pointer" }}
-                    onClick={() => setSelectedTabData(classifications[index])}
+                    onClick={() =>
+                      setSelectedTab({
+                        type: "Single Classification",
+                        data: classifications[index],
+                      })
+                    }
                   >
                     {classification.patientName}
                   </h3>
