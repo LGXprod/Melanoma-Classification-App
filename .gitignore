@@ -30,4 +30,4 @@ model_e2.hdf5
 model_e3.hdf5
 
 # app directories
-src/melanoma_images/*
+melanoma_images/*

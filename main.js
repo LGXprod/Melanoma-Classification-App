@@ -1,6 +1,7 @@
 require("dotenv").config();
 const electron = require("electron");
 const fs = require("fs");
+const process = require("process");
 
 // Module to control application life.
 // Module to create native browser window.
@@ -22,6 +23,15 @@ const startUrl =
   });
 
 console.log("startUrl", startUrl);
+
+console.log(process.cwd());
+
+function base64_encode(file) {
+  // read binary data
+  var bitmap = fs.readFileSync(file);
+  // convert binary data to base64 encoded string
+  return new Buffer(bitmap).toString('base64');
+}
 
 (async () => {
   // console.clear();
@@ -97,7 +107,7 @@ console.log("startUrl", startUrl);
 
     fs.copyFile(
       patientData.filePath,
-      `${__dirname}/src/melanoma_images/${json.length}.${imageFormat}`,
+      `${__dirname}/melanoma_images/${json.length}.${imageFormat}`,
       (err) => {
         if (err) throw err;
 
@@ -107,20 +117,21 @@ console.log("startUrl", startUrl);
         patientData.probability = (Math.random() * 100).toFixed(2);
 
         Jimp.read(
-          `${__dirname}/src/melanoma_images/${json.length}.${imageFormat}`,
+          `${__dirname}/melanoma_images/${json.length}.${imageFormat}`,
           (err, image) => {
             if (err) throw err;
 
             image
               .resize(224, 224)
               .write(
-                `${__dirname}/src/melanoma_images/${json.length}.${imageFormat}`
+                `${__dirname}/melanoma_images/${json.length}.${imageFormat}`
               );
 
             json.push({
               ...patientData,
               id: json.length,
               fileName: `${json.length}.${imageFormat}`,
+              image: base64_encode(patientData.filePath)
             });
 
             fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));

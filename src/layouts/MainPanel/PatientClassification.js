@@ -9,7 +9,7 @@ const PatientClassification = ({ classification }) => {
     imageLocation,
     isMalignant,
     probability,
-    fileName,
+    image
   } = classification;
 
   return (
@@ -28,7 +28,7 @@ const PatientClassification = ({ classification }) => {
         <img
           style={{ marginTop: "25px" }}
           alt="Melanoma"
-          src={require(`melanoma_images/${fileName}`).default}
+          src={`data:image/png;base64, ${image}`}
         />
       </div>
     </div>
