@@ -135,3 +135,8 @@ p, ul {
 .patient-data > * {
   margin-bottom: 5px;
 }
+
+.batch-import {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}

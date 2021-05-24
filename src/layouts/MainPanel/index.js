@@ -28,7 +28,7 @@ const MainPanel = ({ selectedTab, setSelectedTab }) => {
                   <PatientClassification classification={selectedTab.data} />
                 );
               case "Batch Classification":
-                return <BatchClassification />;
+                return <BatchClassification classification={selectedTab.data} />;
               case "About Page":
                 return <AboutPage />;
               case "Single Patient Form":
