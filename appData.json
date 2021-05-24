@@ -20,16 +20,5 @@
     "isMalignant": false,
     "probability": "54.03",
     "id": 1
-  },
-  {
-    "patientName": "Test 1",
-    "age": "123",
-    "sex": "male",
-    "imageLocation": "gerw",
-    "filePath": "/home/matthew/Documents/Uni/DLCNN/image.jpeg",
-    "fileName": "2.jpeg",
-    "isMalignant": true,
-    "probability": "67.00",
-    "id": 2
   }
 ]

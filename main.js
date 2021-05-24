@@ -117,15 +117,15 @@ console.log("startUrl", startUrl);
                 `${__dirname}/src/melanoma_images/${json.length}.${imageFormat}`
               );
 
-              json.push({
-                ...patientData,
-                id: json.length,
-                fileName: `${json.length}.${imageFormat}`,
-              });
-      
-              fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));
-      
-              mainWindow.webContents.send("patientClassification:added", json);
+            json.push({
+              ...patientData,
+              id: json.length,
+              fileName: `${json.length}.${imageFormat}`,
+            });
+
+            fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));
+
+            mainWindow.webContents.send("patientClassification:added", json);
 
             // Jimp.read(
             //   `${__dirname}/src/melanoma_images/${json.length}.${imageFormat}`,
@@ -159,7 +159,7 @@ console.log("startUrl", startUrl);
             //     //   );
 
             //     //   console.log(predictions_tensor.dataSync());
-                  
+
             //     //   // console.log(await predictions_tensor.data);
 
             //     //   // console.log(pixels);
@@ -167,18 +167,15 @@ console.log("startUrl", startUrl);
             //     //   console.log("err", err);
             //     // }
 
-                
             //   }
             // );
           }
         );
-
-        
       }
     );
   });
 
-  // ipcMain.on("batchPatientData:submit", (event, patientsData) => {
-
-  // });
+  ipcMain.on("batchPatientData:submit", (event, batchPatientData) => {
+    console.log(batchPatientData);
+  });
 })();

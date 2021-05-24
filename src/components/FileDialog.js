@@ -9,13 +9,13 @@ const FileDialog = ({ label, isSingleFile, setFiles }) => {
     const { files } = e.target;
 
     if (files && files.length) {
-      const filename = files[0].name;
+      // const filename = files[0].name;
 
-      var parts = filename.split(".");
-      const fileType = parts[parts.length - 1];
-      console.log("fileType", fileType); //ex: zip, rar, jpg, svg etc.
+      // var parts = filename.split(".");
+      // const fileType = parts[parts.length - 1];
+      // console.log("fileType", fileType); //ex: zip, rar, jpg, svg etc.
 
-      setFiles(files[0]);
+      setFiles(isSingleFile ? files[0] : files);
     }
   };
 
@@ -31,6 +31,7 @@ const FileDialog = ({ label, isSingleFile, setFiles }) => {
         ref={inputFile}
         onChange={handleFileUpload}
         style={{ display: "none" }}
+        multiple={isSingleFile ? "": "multiple"}
       />
     </>
   );

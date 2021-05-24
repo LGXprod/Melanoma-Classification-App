@@ -1,8 +1,10 @@
 import React, { useState, useEffect, Fragment } from "react";
 
 import ImportDropDown from "components/ImportDropDown";
-import SinglePatient from "./forms/SinglePatient";
 import AboutPage from "./AboutPage";
+
+import SinglePatient from "./forms/SinglePatient";
+import BatchImport from "./forms/BatchImport";
 
 import PatientClassification from "./PatientClassification";
 import BatchClassification from "./BatchClassification";
@@ -12,7 +14,6 @@ const MainPanel = ({ selectedTab, setSelectedTab }) => {
     console.log("import", selectedTab);
   }, [selectedTab]);
 
-  // ${isSingleImport ? "blur" : ""}
   return (
     <>
       <div className={`main-panel blue`}>
@@ -26,12 +27,14 @@ const MainPanel = ({ selectedTab, setSelectedTab }) => {
                 return (
                   <PatientClassification classification={selectedTab.data} />
                 );
+              case "Batch Classification":
+                return <BatchClassification />;
               case "About Page":
-                return  <AboutPage />;
-              case "BatchClassification":
-                  return <BatchClassification />;
+                return <AboutPage />;
               case "Single Patient Form":
-                  return <SinglePatient setSelectedTab={setSelectedTab} />;
+                return <SinglePatient setSelectedTab={setSelectedTab} />;
+              case "Batch Patient Form":
+                return <BatchImport setSelectedTab={setSelectedTab} />;
               default:
                 return (
                   <Fragment>
