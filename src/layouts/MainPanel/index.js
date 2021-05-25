@@ -20,7 +20,7 @@ const MainPanel = ({ selectedTab, setSelectedTab }) => {
         className={`main-panel blue`}
         style={
           selectedTab.type === "Batch Classification"
-            ? { overflow: "scroll" }
+            ? { overflowY: "scroll" }
             : {}
         }
       >
