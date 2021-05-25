@@ -16,10 +16,19 @@ const MainPanel = ({ selectedTab, setSelectedTab }) => {
 
   return (
     <>
-      <div className={`main-panel blue`}>
+      <div
+        className={`main-panel blue`}
+        style={
+          selectedTab.type === "Batch Classification"
+            ? { overflow: "scroll" }
+            : {}
+        }
+      >
         <div
           style={{ width: "100%", height: "100%" }}
-          className="center-column"
+          className={
+            selectedTab.type === "Batch Classification" ? "" : "center-column"
+          }
         >
           {(() => {
             switch (selectedTab.type) {
@@ -28,7 +37,9 @@ const MainPanel = ({ selectedTab, setSelectedTab }) => {
                   <PatientClassification classification={selectedTab.data} />
                 );
               case "Batch Classification":
-                return <BatchClassification classification={selectedTab.data} />;
+                return (
+                  <BatchClassification classification={selectedTab.data} />
+                );
               case "About Page":
                 return <AboutPage />;
               case "Single Patient Form":
