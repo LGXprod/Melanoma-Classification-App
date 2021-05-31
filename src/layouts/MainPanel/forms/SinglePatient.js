@@ -53,7 +53,7 @@ const SinglePatient = ({ setSelectedTab }) => {
         filePath: file.path,
         fileName: file.name,
       });
-      setSelectedTab({ type: null, data: null });
+      setSelectedTab({ type: "Loading Single Classification", data: null });
     }
   };
 

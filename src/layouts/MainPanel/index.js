@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 
 import ImportDropDown from "components/ImportDropDown";
+import LoadingModal from "components/LoadingModal";
 import AboutPage from "./AboutPage";
 
 import SinglePatient from "./forms/SinglePatient";
@@ -46,6 +47,8 @@ const MainPanel = ({ selectedTab, setSelectedTab }) => {
                 return <SinglePatient setSelectedTab={setSelectedTab} />;
               case "Batch Patient Form":
                 return <BatchImport setSelectedTab={setSelectedTab} />;
+              case "Loading Single Classification":
+                return <LoadingModal />;
               default:
                 return (
                   <Fragment>
