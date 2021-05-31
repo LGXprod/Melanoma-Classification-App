@@ -26,7 +26,7 @@ const PatientClassification = ({ classification }) => {
         </h3>
 
         <img
-          style={{ marginTop: "25px" }}
+          style={{ marginTop: "25px", width: "75%" }}
           alt="Melanoma"
           src={`data:image/png;base64, ${image}`}
         />
