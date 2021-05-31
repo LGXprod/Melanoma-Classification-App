@@ -3,7 +3,7 @@ import React from "react";
 const PatientClassification = ({ classification }) => {
   console.log(classification);
   const {
-    patientName,
+    name,
     age,
     sex,
     imageLocation,
@@ -14,7 +14,7 @@ const PatientClassification = ({ classification }) => {
 
   return (
     <div className="full-width center-column patient-tab">
-      <h1>Patient name: {patientName}</h1>
+      <h1>Patient name: {name}</h1>
 
       <div className="center-column patient-data">
         <h3>Age: {age}</h3>
