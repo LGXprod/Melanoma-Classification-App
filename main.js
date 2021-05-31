@@ -16,6 +16,8 @@ const url = require("url");
 // const tfn = require("@tensorflow/tfjs-node");
 const Jimp = require("jimp");
 
+const cnn_model = require("./cnn_model");
+
 const startUrl =
   process.env.ELECTRON_START_URL ||
   url.format({
@@ -113,76 +115,47 @@ function base64_encode(file) {
       (err) => {
         if (err) throw err;
 
-        // need to make classification at this point and append it to the object
-        patientData.isMalignant = Math.random() < 0.5; // placeholder gives random boolean
-        // probability that the model gives for the classification being correct
-        patientData.probability = (Math.random() * 100).toFixed(2);
-
         Jimp.read(
           `${__dirname}/melanoma_images/${json.length}.${imageFormat}`,
           (err, image) => {
             if (err) throw err;
 
             image
-              .resize(224, 224)
+              .resize(512, 512)
               .write(
-                `${__dirname}/melanoma_images/${json.length}.${imageFormat}`
+                `${__dirname}/melanoma_images/${json.length}.${imageFormat}`,
+                (err) => {
+                  if (err) throw err;
+
+                  cnn_model.predict(patientData.filePath, (probability) => {
+                    // need to make classification at this point and append it to the object
+                    patientData.isMalignant = probability > 0.5; // placeholder gives random boolean
+                    // probability that the model gives for the classification being correct
+                    patientData.probability =
+                      Math.round(probability * 10000) / 10000;
+
+                    console.log(patientData);
+
+                    json.push({
+                      isBatch: false,
+                      ...patientData,
+                      id: json.length,
+                      fileName: `${json.length}.${imageFormat}`,
+                      image: base64_encode(patientData.filePath),
+                    });
+
+                    fs.writeFileSync(
+                      "appData.json",
+                      JSON.stringify(json, null, 2)
+                    );
+
+                    mainWindow.webContents.send(
+                      "patientClassification:added",
+                      json
+                    );
+                  });
+                }
               );
-
-            json.push({
-              isBatch: false,
-              ...patientData,
-              id: json.length,
-              fileName: `${json.length}.${imageFormat}`,
-              image: base64_encode(patientData.filePath),
-            });
-
-            fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));
-
-            mainWindow.webContents.send("patientClassification:added", json);
-
-            // Jimp.read(
-            //   `${__dirname}/src/melanoma_images/${json.length}.${imageFormat}`,
-            //   async (err, image) => {
-            //     let pixels = [];
-
-            //     for (let x = 0; x < 224; x++) {
-            //       pixels.push([]);
-
-            //       for (let y = 0; y < 224; y++) {
-            //         const rgba = Jimp.intToRGBA(image.getPixelColour(x, y));
-
-            //         pixels[pixels.length - 1].push([rgba.r, rgba.g, rgba.b]);
-            //       }
-            //     }
-
-            //     // for (let x = 0; x < 224; x++) {
-            //     //   for (let y = 0; y < 224; y++) {
-            //     //     const rgba = Jimp.intToRGBA(image.getPixelColour(x, y));
-
-            //     //     pixels.push([rgba.r, rgba.g, rgba.b]);
-            //     //   }
-            //     // }
-
-            //     // try {
-            //     //   const handler = tfn.io.fileSystem(`${__dirname}/model.json`);
-            //     //   const cnn_model = await tf.loadGraphModel(handler);
-
-            //     //   const predictions_tensor = await cnn_model.executeAsync(
-            //     //     tf.tensor([pixels])
-            //     //   );
-
-            //     //   console.log(predictions_tensor.dataSync());
-
-            //     //   // console.log(await predictions_tensor.data);
-
-            //     //   // console.log(pixels);
-            //     // } catch (err) {
-            //     //   console.log("err", err);
-            //     // }
-
-            //   }
-            // );
           }
         );
       }
@@ -211,7 +184,7 @@ function base64_encode(file) {
           name: batchName,
           ...currentPatientData,
           id: currentPatientData.length,
-          batchPatientData
+          batchPatientData,
         });
 
         fs.writeFileSync(

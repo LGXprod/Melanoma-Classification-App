@@ -9,7 +9,7 @@ const ImportDropDown = ({ selectedTab, setSelectedTab }) => {
       <Select
         native
         variant="filled"
-        value={selectedTab.type}
+        value={selectedTab.type != null ? selectedTab.type : "Single Classification"}
         onChange={(e) => setSelectedTab({
           type: e.target.value,
           data: null

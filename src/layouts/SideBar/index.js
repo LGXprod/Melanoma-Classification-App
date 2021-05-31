@@ -53,10 +53,10 @@ const SideBar = ({ classifications, setSelectedTab }) => {
                     style={{ cursor: "pointer" }}
                     onClick={() =>
                       setSelectedTab({
-                        type: classifications[index].isBatch
+                        type: classification.isBatch
                           ? "Batch Classification"
                           : "Single Classification",
-                        data: classifications[index],
+                        data: classification,
                       })
                     }
                   >

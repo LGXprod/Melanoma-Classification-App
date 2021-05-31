@@ -26,8 +26,7 @@ yarn-error.log*
 *.env
 
 # models
-model_e2.hdf5
-model_e3.hdf5
+*.hdf5
 
 # app directories
 melanoma_images/*

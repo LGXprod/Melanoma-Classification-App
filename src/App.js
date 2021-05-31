@@ -6,6 +6,7 @@ const { ipcRenderer } = window.require("electron");
 
 const App = () => {
   const [classifications, setClassifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState({
     type: null,
     data: null
@@ -15,17 +16,18 @@ const App = () => {
     ipcRenderer.send("classifications:initialLoad");
 
     ipcRenderer.on("classifications:initialLoad", (event, classifications) => {
-      console.log(classifications);
+      console.log("c1", classifications);
       setClassifications(classifications);
     });
-  }, []);
 
-  useEffect(() => {
-    ipcRenderer.on("patientClassification:added", (event, classification) => {
-      console.log("num", classifications.length);
-      setClassifications([...classifications, classification]);
+    ipcRenderer.on("patientClassification:added", (event, classifications) => {
+      console.log("new classification added", classifications)
+      setIsLoading(false);
+      setClassifications(classifications);
     });
-  }, [classifications]);
+
+    return;
+  }, []);
 
   useEffect(() => {
     console.log("t", selectedTab);
@@ -41,6 +43,8 @@ const App = () => {
       <MainPanel
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
+        setIsLoading={setIsLoading}
+        isLoading={isLoading}
       />
     </>
   );
