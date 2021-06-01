@@ -1,7 +1,8 @@
 import React from "react";
+import ImportDropDown from "components/ImportDropDown";
 import "styles/index.css";
 
-const AboutPage = () => {
+const AboutPage = ({ selectedTab, setSelectedTab }) => {
   return (
     <div className="main-panel center-column">
       <h1 style={{ marginBottom: "25px" }}>About the Melanomore App</h1>
@@ -45,6 +46,13 @@ const AboutPage = () => {
         diagnostic accuracy for suspicious lesions and to remove barriers to
         entry for a wider range of clinicians to conduct skin checks.
       </p>
+
+      <p>Begin importing and classifying skin imaging using the dropdown below:</p>
+
+      <ImportDropDown
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
     </div>
   );
 };

@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
+import ImportDropDown from "components/ImportDropDown";
 
-const BatchClassification = ({ classification }) => {
+const BatchClassification = ({ classification, selectedTab, setSelectedTab }) => {
   const { name, batchPatientData } = classification;
 
   return (
     <div>
+      <div style={{ width: "100%" }}>
+        <div style={{float: "right"}}>
+        <ImportDropDown
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+        />
+        </div>
+      </div>
+
       <h1 style={{ marginBottom: "20px" }}>{name}</h1>
 
       <div className="batch-import">
