@@ -11,9 +11,15 @@ import PatientClassification from "./PatientClassification";
 import BatchClassification from "./BatchClassification";
 
 const MainPanel = ({ selectedTab, setSelectedTab }) => {
-  useEffect(() => {
-    console.log("import", selectedTab);
-  }, [selectedTab]);
+  // const [previousTab, setPreviousTab] = useState();
+
+  // useEffect(() => {
+  //   const { type } = selectedTab;
+
+  //   if (type !== "Single Patient Form" && type !== "Batch Patient Form") {
+  //     setPreviousTab(selectedTab);
+  //   }
+  // }, [selectedTab]);
 
   return (
     <>
@@ -35,7 +41,11 @@ const MainPanel = ({ selectedTab, setSelectedTab }) => {
             switch (selectedTab.type) {
               case "Single Classification":
                 return (
-                  <PatientClassification classification={selectedTab.data} />
+                  <PatientClassification
+                    selectedTab={selectedTab}
+                    setSelectedTab={setSelectedTab}
+                    classification={selectedTab.data}
+                  />
                 );
               case "Batch Classification":
                 return (
