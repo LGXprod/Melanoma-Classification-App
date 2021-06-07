@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 
 import ImportDropDown from "components/ImportDropDown";
 import LoadingModal from "components/LoadingModal";
+import ProgressModal from "components/ProgressModal";
 import AboutPage from "./AboutPage";
 
 import SinglePatient from "./forms/SinglePatient";
@@ -68,6 +69,8 @@ const MainPanel = ({ selectedTab, setSelectedTab }) => {
                 return <BatchImport setSelectedTab={setSelectedTab} />;
               case "Loading Single Classification":
                 return <LoadingModal />;
+              case "Loading Batch Classification":
+                return <ProgressModal />;
               default:
                 return (
                   <Fragment>

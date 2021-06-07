@@ -226,7 +226,7 @@ function getBatchClassification(patientData, json, id) {
 
             mainWindow.webContents.send("batchClassification:progress", {
               numProcessed: parseInt(patientIndex) + 1,
-              total: currentPatientData.length,
+              total: batchPatientData.length,
             });
 
             console.log("progress", parseInt(patientIndex) + 1);

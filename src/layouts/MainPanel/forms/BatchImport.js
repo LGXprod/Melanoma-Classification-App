@@ -42,7 +42,7 @@ const BatchImport = ({ setSelectedTab }) => {
     console.log(batchPatientData);
 
     ipcRenderer.send("batchPatientData:submit", batchPatientData);
-    setSelectedTab({ type: null, data: null });
+    setSelectedTab({ type: "Loading Batch Classification", data: null });
   };
 
   return (
