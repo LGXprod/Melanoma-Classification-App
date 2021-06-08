@@ -41,7 +41,7 @@ const SinglePatient = ({ setSelectedTab }) => {
     for (let attribute in patientDetails) {
       if (patientDetails[attribute] == null) {
         formCompleted = false;
-        setIsInComplete(true);
+        setIsInComplete(attribute);
         break;
       }
     }
@@ -130,8 +130,10 @@ const SinglePatient = ({ setSelectedTab }) => {
           />
         </div>
 
+        {file != null && <label>Image selected: {file.name}</label>}
+
         {isIncomplete ? (
-          <label>
+          <label style={{ color: "#ff0033", fontWeight: "bold" }}>
             Form is incomplete. Please ensure you have correctly filled out each
             field.
           </label>
