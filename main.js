@@ -46,12 +46,12 @@ function getImgClassification(patientData, json, callback, batchId = null) {
 
   fs.copyFile(
     patientData.filePath,
-    `${__dirname}/melanoma_images/${newFileName}.${imageFormat}`,
+    `${app.getAppPath()}/melanoma_images/${newFileName}.${imageFormat}`,
     (err) => {
       if (err) throw err;
 
       Jimp.read(
-        `${__dirname}/melanoma_images/${newFileName}.${imageFormat}`,
+        `${app.getAppPath()}/melanoma_images/${newFileName}.${imageFormat}`,
         (err, image) => {
           if (err) throw err;
 
@@ -60,14 +60,14 @@ function getImgClassification(patientData, json, callback, batchId = null) {
           image
             .resize(512, 512)
             .write(
-              `${__dirname}/melanoma_images/${newFileName}.${imageFormat}`,
+              `${app.getAppPath()}/melanoma_images/${newFileName}.${imageFormat}`,
               (err) => {
                 if (err) throw err;
 
                 console.log("here 2");
 
                 cnn_model.predict(
-                  `${__dirname}/melanoma_images/${newFileName}.${imageFormat}`,
+                  `${app.getAppPath()}/melanoma_images/${newFileName}.${imageFormat}`,
                   (probability) => {
                     console.log("here 3");
                     // need to make classification at this point and append it to the object
@@ -102,7 +102,7 @@ function getBatchClassification(patientData, json, id) {
       (patientClassification) => {
         json[json.length - 1].batchPatientData.push(patientClassification);
 
-        fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));
+        fs.writeFileSync(`${app.getAppPath()}/appData.json`, JSON.stringify(json, null, 2));
 
         resolve();
       },
@@ -170,12 +170,12 @@ function getBatchClassification(patientData, json, id) {
   ipcMain.on("classifications:initialLoad", (event) => {
     mainWindow.webContents.send(
       "classifications:initialLoad",
-      JSON.parse(fs.readFileSync("appData.json"))
+      JSON.parse(fs.readFileSync(`${app.getAppPath()}/appData.json`))
     );
   });
 
   ipcMain.on("patientData:submit", (event, patientData) => {
-    let currentAppData = fs.readFileSync("appData.json");
+    let currentAppData = fs.readFileSync(`${app.getAppPath()}/appData.json`);
     let json = JSON.parse(currentAppData);
 
     getImgClassification(patientData, json, (patientClassification) => {
@@ -202,7 +202,7 @@ function getBatchClassification(patientData, json, id) {
         })
       )
       .on("end", () => {
-        let jsonFile = fs.readFileSync("appData.json");
+        let jsonFile = fs.readFileSync(`${app.getAppPath()}/appData.json`);
         let currentPatientData = JSON.parse(jsonFile);
 
         currentPatientData.push({
@@ -239,7 +239,7 @@ function getBatchClassification(patientData, json, id) {
 
           mainWindow.webContents.send(
             "patientClassification:added",
-            JSON.parse(fs.readFileSync("appData.json"))
+            JSON.parse(fs.readFileSync(`${app.getAppPath()}/appData.json`))
           );
         })();
       });

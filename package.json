@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "main.js",
+  "description": "we have built a machine learning model (which is interfaced with using this app) that processes dermatoscopic pictures (which can be generated using smartphone attachments) and predicts the risk of melanoma in the imaged lesion. The desired outcome is to develop a tool capable of assisting clinicians in improving their diagnostic accuracy for suspicious lesions and to remove barriers to entry for a wider range of clinicians to conduct skin checks.",
   "homepage": "./",
   "dependencies": {
     "@material-ui/core": "^4.11.3",
@@ -26,7 +27,19 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron": "electron .",
-    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
+    "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/mac.icns --prune=false --out=release-builds",
+    "package-win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --icon=icons/windows.ico --prune=false --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"MelaNoMore\"",
+    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=icons/linux.png --prune=false --asar=false --out=release-builds",
+    "create-debian-installer": "electron-installer-debian --src release-builds/melanoma-classifier-app-linux-x64/ --arch amd64 --config debian.json"
+  },
+  "build": {
+    "extraResources": [
+      "./model.hdf5",
+      "./cnn_model.py",
+      "./appData.json",
+      "./melanoma_images"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +60,7 @@
     ]
   },
   "devDependencies": {
-    "electron": "^12.0.7"
+    "electron": "^12.0.7",
+    "electron-packager": "^15.2.0"
   }
 }
