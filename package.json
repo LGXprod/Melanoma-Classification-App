@@ -1,5 +1,5 @@
 {
-  "name": "melanoma-classifier-app",
+  "name": "MelaNoMore",
   "version": "0.1.0",
   "private": true,
   "main": "main.js",
@@ -15,6 +15,7 @@
     "csv-parser": "^3.0.0",
     "dotenv": "^8.2.0",
     "jimp": "^0.16.1",
+    "python-shell": "^3.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -31,14 +32,13 @@
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/mac.icns --prune=false --out=release-builds",
     "package-win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --icon=icons/windows.ico --prune=false --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"MelaNoMore\"",
     "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=icons/linux.png --prune=false --asar=false --out=release-builds",
-    "create-debian-installer": "electron-installer-debian --src release-builds/melanoma-classifier-app-linux-x64/ --arch amd64 --config debian.json"
+    "create-debian-installer": "electron-installer-debian --src release-builds/MelaNoMore-linux-x64/ --arch amd64 --config debian.json"
   },
   "build": {
     "extraResources": [
       "./model.hdf5",
       "./cnn_model.py",
-      "./appData.json",
-      "./melanoma_images"
+      "./python_packages"
     ]
   },
   "eslintConfig": {

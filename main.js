@@ -30,6 +30,21 @@ console.log("startUrl", startUrl);
 
 console.log(process.cwd());
 
+const patientMetaDataPath = `${app.getPath(
+  "userData"
+)}/patient-metadata.json`;
+const skinImagingPath = `${app.getPath("userData")}/melanoma_images/`;
+
+try {
+  fs.readFileSync(patientMetaDataPath);
+} catch {
+  fs.writeFileSync(patientMetaDataPath, JSON.stringify([]));
+}
+
+if (!fs.existsSync(skinImagingPath)) {
+  fs.mkdirSync(skinImagingPath);
+}
+
 function base64_encode(file) {
   // read binary data
   var bitmap = fs.readFileSync(file);
@@ -44,54 +59,40 @@ function getImgClassification(patientData, json, callback, batchId = null) {
   const imageFormat =
     patientData.fileName.split(".")[patientData.fileName.split(".").length - 1];
 
-  fs.copyFile(
-    patientData.filePath,
-    `${app.getAppPath()}/melanoma_images/${newFileName}.${imageFormat}`,
-    (err) => {
+  const newFilePath = `${skinImagingPath}/${newFileName}.${imageFormat}`;
+
+  fs.copyFile(patientData.filePath, newFilePath, (err) => {
+    if (err) throw err;
+
+    Jimp.read(newFilePath, (err, image) => {
       if (err) throw err;
 
-      Jimp.read(
-        `${app.getAppPath()}/melanoma_images/${newFileName}.${imageFormat}`,
-        (err, image) => {
-          if (err) throw err;
+      console.log("here 1");
 
-          console.log("here 1");
+      image.resize(512, 512).write(newFilePath, (err) => {
+        if (err) throw err;
 
-          image
-            .resize(512, 512)
-            .write(
-              `${app.getAppPath()}/melanoma_images/${newFileName}.${imageFormat}`,
-              (err) => {
-                if (err) throw err;
+        console.log("here 2");
 
-                console.log("here 2");
+        cnn_model.predict(newFilePath, app.getAppPath(), (probability) => {
+          console.log("here 3");
+          // need to make classification at this point and append it to the object
+          patientData.isMalignant = probability > 0.5; // placeholder gives random boolean
+          // probability that the model gives for the classification being correct
+          patientData.probability = Math.round(probability * 10000) / 10000;
 
-                cnn_model.predict(
-                  `${app.getAppPath()}/melanoma_images/${newFileName}.${imageFormat}`,
-                  (probability) => {
-                    console.log("here 3");
-                    // need to make classification at this point and append it to the object
-                    patientData.isMalignant = probability > 0.5; // placeholder gives random boolean
-                    // probability that the model gives for the classification being correct
-                    patientData.probability =
-                      Math.round(probability * 10000) / 10000;
+          console.log("p(x)", patientData.probability);
 
-                    console.log("p(x)", patientData.probability);
-
-                    callback({
-                      id,
-                      ...patientData,
-                      fileName: `${newFileName}.${imageFormat}`,
-                      image: base64_encode(patientData.filePath),
-                    });
-                  }
-                );
-              }
-            );
-        }
-      );
-    }
-  );
+          callback({
+            id,
+            ...patientData,
+            fileName: `${newFileName}.${imageFormat}`,
+            image: base64_encode(patientData.filePath),
+          });
+        });
+      });
+    });
+  });
 }
 
 function getBatchClassification(patientData, json, id) {
@@ -102,7 +103,10 @@ function getBatchClassification(patientData, json, id) {
       (patientClassification) => {
         json[json.length - 1].batchPatientData.push(patientClassification);
 
-        fs.writeFileSync(`${app.getAppPath()}/appData.json`, JSON.stringify(json, null, 2));
+        fs.writeFileSync(
+          patientMetaDataPath,
+          JSON.stringify(json, null, 2)
+        );
 
         resolve();
       },
@@ -170,18 +174,18 @@ function getBatchClassification(patientData, json, id) {
   ipcMain.on("classifications:initialLoad", (event) => {
     mainWindow.webContents.send(
       "classifications:initialLoad",
-      JSON.parse(fs.readFileSync(`${app.getAppPath()}/appData.json`))
+      JSON.parse(fs.readFileSync(patientMetaDataPath))
     );
   });
 
   ipcMain.on("patientData:submit", (event, patientData) => {
-    let currentAppData = fs.readFileSync(`${app.getAppPath()}/appData.json`);
+    let currentAppData = fs.readFileSync(patientMetaDataPath);
     let json = JSON.parse(currentAppData);
 
     getImgClassification(patientData, json, (patientClassification) => {
       json.push({ isBatch: false, ...patientClassification });
 
-      fs.writeFileSync("appData.json", JSON.stringify(json, null, 2));
+      fs.writeFileSync(patientMetaDataPath, JSON.stringify(json, null, 2));
 
       mainWindow.webContents.send("patientClassification:added", json);
     });
@@ -202,7 +206,7 @@ function getBatchClassification(patientData, json, id) {
         })
       )
       .on("end", () => {
-        let jsonFile = fs.readFileSync(`${app.getAppPath()}/appData.json`);
+        let jsonFile = fs.readFileSync(patientMetaDataPath);
         let currentPatientData = JSON.parse(jsonFile);
 
         currentPatientData.push({
@@ -232,14 +236,9 @@ function getBatchClassification(patientData, json, id) {
             console.log("progress", parseInt(patientIndex) + 1);
           }
 
-          // fs.writeFileSync(
-          //   "appData.json",
-          //   JSON.stringify(currentPatientData, null, 2)
-          // );
-
           mainWindow.webContents.send(
             "patientClassification:added",
-            JSON.parse(fs.readFileSync(`${app.getAppPath()}/appData.json`))
+            JSON.parse(fs.readFileSync(patientMetaDataPath))
           );
         })();
       });
