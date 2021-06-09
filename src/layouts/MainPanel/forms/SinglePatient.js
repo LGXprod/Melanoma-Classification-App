@@ -83,6 +83,8 @@ const SinglePatient = ({ setSelectedTab }) => {
           <TextField
             id="standard-basic"
             label="Age"
+            type="number"
+            InputProps={{ inputProps: { min: 0 } }}
             onChange={(e) => updateDetails("age", e.target.value)}
           />
         </div>
