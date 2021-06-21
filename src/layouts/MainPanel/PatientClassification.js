@@ -32,7 +32,7 @@ const PatientClassification = ({
         <h3>Biological sex: {sex}</h3>
         <h3>Location of imaged site: {imageLocation}</h3>
         <h3>
-          Classification: {isMalignant ? "Malignant" : "Benign"} (Probability ={" "}
+          Classification: {isMalignant ? "Malignant" : "Benign"} (Probability of Malignancy ={" "}
           {probability}%)
         </h3>
 

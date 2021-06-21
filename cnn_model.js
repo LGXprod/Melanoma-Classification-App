@@ -33,7 +33,7 @@ const predict = (filePath, modelPath, callback) => {
 
     const [probability] = results;
     console.log("py", probability.toString());
-    callback(JSON.parse(probability.toString())[0][0] * 100);
+    callback(parseFloat(JSON.parse(probability.toString())[0][0]) * 100);
   });
 };
 

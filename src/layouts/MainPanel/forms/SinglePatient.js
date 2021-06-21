@@ -126,7 +126,7 @@ const SinglePatient = ({ setSelectedTab }) => {
         <div>
           <FileDialog
             isSingleFile={true}
-            label="Import Lession Image"
+            label="Import Lesion Image"
             files={file}
             setFiles={setFile}
           />

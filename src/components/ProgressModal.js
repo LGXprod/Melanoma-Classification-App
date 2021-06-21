@@ -24,7 +24,7 @@ const ProgressModal = () => {
       >
         <h1 style={{ marginBottom: "25px" }}>
           The Deep Learning Model is now processing all your patient's skin
-          imaging to classify it as benign or malignant. This usually takes 1-5
+          imaging to classify it as benign or malignant. This usually takes 1-2
           minutes per patient.
         </h1>
 

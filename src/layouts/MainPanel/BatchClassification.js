@@ -45,7 +45,7 @@ const BatchClassification = ({
               <h3>Location of imaged site: {patient.imageLocation}</h3>
               <h3 style={{ marginBottom: "50px" }}>
                 Classification: {patient.isMalignant ? "Malignant" : "Benign"}{" "}
-                (Probability = {patient.probability}%)
+                (Probability of Malignancy = {patient.probability}%)
               </h3>
             </div>
           </div>

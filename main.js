@@ -77,7 +77,7 @@ function getImgClassification(patientData, json, callback, batchId = null) {
         cnn_model.predict(newFilePath, app.getAppPath(), (probability) => {
           console.log("here 3");
           // need to make classification at this point and append it to the object
-          patientData.isMalignant = probability > 0.5; // placeholder gives random boolean
+          patientData.isMalignant = probability > 50; // placeholder gives random boolean
           // probability that the model gives for the classification being correct
           patientData.probability = Math.round(probability * 10000) / 10000;
 
