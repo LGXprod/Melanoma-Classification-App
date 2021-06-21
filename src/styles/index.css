@@ -1,15 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
 .blue {
-  background-color: #64819b;
+  background-color: #1F2933;
 }
 
 .green {
-  background-color: #649b99;
+  background-color: #52606D;
 }
 
 .purple {
-  background-color: #64669b;
+  background-color: #9AA5B1;
 }
 
 .blur {
@@ -36,7 +36,7 @@
   width: calc(20% - 2px);
   height: 100vh;
   z-index: 1;
-  border-right: 2px solid #64669b;
+  border-right: 2px solid #9AA5B1;
 }
 
 .side-bar div > div, .patient-tab > * {
@@ -59,7 +59,7 @@ p, ul {
 
 .reg-button {
   color: #f2f3f4 !important;
-  background-color: #64669b !important;
+  background-color: #9AA5B1 !important;
 }
 
 .center-column {
@@ -89,7 +89,7 @@ p, ul {
   width: 50%;
   border-radius: 10px;
   padding: 10px;
-  border: 2px solid #64669b;
+  border: 2px solid #9AA5B1;
 }
 
 .patient-form .MuiInputBase-input {
@@ -109,19 +109,23 @@ p, ul {
   color: black;
 }
 
+.MuiInputBase-input {
+  color: #f2f3f4 !important;
+}
+
 .MuiFilledInput-input {
   padding: 10px !important;
   border-radius: 5px 5px 0 0 !important;
-  background-color: #64669b !important;
-  color: white !important;
+  background-color: #52606D !important;
+  color: #f2f3f4 !important;
 }
 
 .MuiRadio-root {
-  color: #64819b !important;
+  color: #1F2933 !important;
 }
 
 .MuiRadio-colorPrimary.Mui-checked {
-  color: #64669b !important;
+  color: #9AA5B1 !important;
 }
 
 .MuiSelect-icon {
@@ -139,4 +143,20 @@ p, ul {
 .batch-import {
   display: grid;
   grid-template-columns: 33% 33% 33%;
+}
+
+.MuiFilledInput-underline:after {
+  border-bottom: 2px solid #9AA5B1 !important;
+}
+
+.MuiInput-underline:after {
+  border-bottom: 2px solid #1F2933 !important;
+}
+
+.MuiLinearProgress-colorPrimary {
+  background-color: #1F2933 !important;
+}
+
+.MuiLinearProgress-barColorPrimary {
+  background-color: #9AA5B1 !important;
 }

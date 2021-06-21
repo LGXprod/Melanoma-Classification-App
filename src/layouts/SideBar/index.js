@@ -18,7 +18,7 @@ const SideBar = ({ classifications, setSelectedTab }) => {
         </div>
 
         <h2
-          style={{ cursor: "pointer" }}
+          style={{ cursor: "pointer", marginBottom: "20px" }}
           onClick={() =>
             setSelectedTab({
               type: "About Page",
@@ -30,20 +30,6 @@ const SideBar = ({ classifications, setSelectedTab }) => {
           <br />
           Melanmore
         </h2>
-
-        {classifications.length > 0 ? (
-          <hr
-            style={{
-              width: "100%",
-              height: "2px",
-              border: "0",
-              padding: "0",
-              borderTop: "2px solid #64669b",
-              marginTop: "10px",
-              marginBottom: "10px",
-            }}
-          />
-        ) : null}
 
         {classifications.length > 0
           ? classifications.map((classification, index) => {
