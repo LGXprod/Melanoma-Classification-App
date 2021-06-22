@@ -160,3 +160,8 @@ p, ul {
 .MuiLinearProgress-barColorPrimary {
   background-color: #9AA5B1 !important;
 }
+
+.MuiLinearProgress-root {
+  height: 8px !important;
+  border-radius: 4px;
+}

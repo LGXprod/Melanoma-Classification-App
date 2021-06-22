@@ -41,7 +41,7 @@ const ProgressModal = () => {
             <br />
             patients processed and classified
           </label>
-        ) : null}
+        ) : <label style={{ textAlign: "center" }}>Loading...</label>}
       </div>
     </div>
   );
