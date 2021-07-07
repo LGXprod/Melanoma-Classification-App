@@ -30,9 +30,7 @@ console.log("startUrl", startUrl);
 
 console.log(process.cwd());
 
-const patientMetaDataPath = `${app.getPath(
-  "userData"
-)}/patient-metadata.json`;
+const patientMetaDataPath = `${app.getPath("userData")}/patient-metadata.json`;
 const skinImagingPath = `${app.getPath("userData")}/melanoma_images/`;
 
 try {
@@ -103,10 +101,7 @@ function getBatchClassification(patientData, json, id) {
       (patientClassification) => {
         json[json.length - 1].batchPatientData.push(patientClassification);
 
-        fs.writeFileSync(
-          patientMetaDataPath,
-          JSON.stringify(json, null, 2)
-        );
+        fs.writeFileSync(patientMetaDataPath, JSON.stringify(json, null, 2));
 
         resolve();
       },
@@ -188,6 +183,17 @@ function getBatchClassification(patientData, json, id) {
       fs.writeFileSync(patientMetaDataPath, JSON.stringify(json, null, 2));
 
       mainWindow.webContents.send("patientClassification:added", json);
+    });
+  });
+
+  ipcMain.on("image_res:check", (event, imagePath) => {
+    Jimp.read(imagePath, (err, image) => {
+      if (err) throw err;
+
+      mainWindow.webContents.send("image_res:checked", {
+        image: base64_encode(imagePath),
+        image_res: [image.bitmap.width, image.bitmap.height],
+      });
     });
   });
 

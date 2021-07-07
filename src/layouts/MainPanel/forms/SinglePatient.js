@@ -11,10 +11,13 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 
+import CropTool from "./CropTool";
+
 const { ipcRenderer } = window.require("electron");
 
 const SinglePatient = ({ setSelectedTab }) => {
   const [file, setFile] = useState();
+  const [imageDetails, setImageDetails] = useState();
 
   const [patientDetails, setPatientDetails] = useState({
     name: null,
@@ -24,6 +27,20 @@ const SinglePatient = ({ setSelectedTab }) => {
   });
 
   const [isIncomplete, setIsInComplete] = useState(false);
+
+  useEffect(() => {
+    console.log("f", file);
+
+    if (file != null) {
+      ipcRenderer.send("image_res:check", file.path);
+    }
+  }, [file]);
+
+  useEffect(() => {
+    ipcRenderer.on("image_res:checked", (event, imageDetails) => {
+      setImageDetails(imageDetails);
+    });
+  }, []);
 
   const updateDetails = (attribute, value) => {
     setPatientDetails({ ...patientDetails, [attribute]: value });
@@ -71,81 +88,87 @@ const SinglePatient = ({ setSelectedTab }) => {
 
         <h1 style={{ marginTop: "-30px" }}>Single Patient Detection</h1>
 
-        <div>
-          <TextField
-            id="standard-basic"
-            label="Patient name"
-            onChange={(e) => updateDetails("name", e.target.value)}
-          />
-        </div>
-
-        <div>
-          <TextField
-            id="standard-basic"
-            label="Age"
-            type="number"
-            InputProps={{ inputProps: { min: 0 } }}
-            onChange={(e) => updateDetails("age", e.target.value)}
-          />
-        </div>
-
-        <div style={{ marginTop: "26px", width: "275px" }}>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Biological sex</FormLabel>
-            <RadioGroup
-              row
-              aria-label="position"
-              name="position"
-              defaultValue="top"
-              onChange={(e) => updateDetails("sex", e.target.value)}
-            >
-              <FormControlLabel
-                value="male"
-                control={<Radio color="primary" />}
-                label="Male"
-                labelPlacement="end"
+        {imageDetails != null ? (
+          <CropTool imageDetails={imageDetails} />
+        ) : (
+          <>
+            <div>
+              <TextField
+                id="standard-basic"
+                label="Patient name"
+                onChange={(e) => updateDetails("name", e.target.value)}
               />
-              <FormControlLabel
-                value="female"
-                control={<Radio color="primary" />}
-                label="Female"
-                labelPlacement="end"
+            </div>
+
+            <div>
+              <TextField
+                id="standard-basic"
+                label="Age"
+                type="number"
+                InputProps={{ inputProps: { min: 0 } }}
+                onChange={(e) => updateDetails("age", e.target.value)}
               />
-            </RadioGroup>
-          </FormControl>
-        </div>
+            </div>
 
-        <div>
-          <TextField
-            id="standard-basic"
-            label="Location of image sited on patient"
-            onChange={(e) => updateDetails("imageLocation", e.target.value)}
-          />
-        </div>
+            <div style={{ marginTop: "26px", width: "275px" }}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Biological sex</FormLabel>
+                <RadioGroup
+                  row
+                  aria-label="position"
+                  name="position"
+                  defaultValue="top"
+                  onChange={(e) => updateDetails("sex", e.target.value)}
+                >
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio color="primary" />}
+                    label="Male"
+                    labelPlacement="end"
+                  />
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio color="primary" />}
+                    label="Female"
+                    labelPlacement="end"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </div>
 
-        <div>
-          <FileDialog
-            isSingleFile={true}
-            label="Import Lesion Image"
-            files={file}
-            setFiles={setFile}
-          />
-        </div>
+            <div>
+              <TextField
+                id="standard-basic"
+                label="Location of image sited on patient"
+                onChange={(e) => updateDetails("imageLocation", e.target.value)}
+              />
+            </div>
 
-        {file != null && <label>Image selected: {file.name}</label>}
+            <div>
+              <FileDialog
+                isSingleFile={true}
+                label="Import Lesion Image"
+                files={file}
+                setFiles={setFile}
+              />
+            </div>
 
-        {isIncomplete ? (
-          <label style={{ color: "#ff0033", fontWeight: "bold" }}>
-            Form is incomplete. Please ensure you have correctly filled out each
-            field.
-          </label>
-        ) : null}
+            {file != null && <label>Image selected: {file.name}</label>}
 
-        <div>
-          <Button className="reg-button" onClick={onSubmit}>
-            Submit
-          </Button>
-        </div>
+            {isIncomplete ? (
+              <label style={{ color: "#ff0033", fontWeight: "bold" }}>
+                Form is incomplete. Please ensure you have correctly filled out
+                each field.
+              </label>
+            ) : null}
+
+            <div>
+              <Button className="reg-button" onClick={onSubmit}>
+                Submit
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
